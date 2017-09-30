@@ -9,12 +9,14 @@ namespace DynamicForm.Core
     internal class QuestionRoot : QuestionBase
     {
         Form _form;
-        public QuestionRoot(Form form) : base(null)
+        public QuestionRoot(Form form) : base()
         {
             _form = form;
         }
 
         public override string Title { get { return _form.Title; } set { _form.Title = value; } }
         public override Form Form => _form;
+
+        public override AnswerBase AnswerModel => null;
     }
 }

@@ -1,4 +1,5 @@
-﻿using DynamicForm.Core;
+﻿using System;
+using DynamicForm.Core;
 
 namespace DynamicForm.Tests
 {
@@ -7,5 +8,7 @@ namespace DynamicForm.Tests
         public CompositeQuestion(QuestionBase parent) : base( parent)
         {
         }
+
+        public override AnswerBase AnswerModel => throw new NotImplementedException();
     }
 }

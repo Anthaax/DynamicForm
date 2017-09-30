@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DynamicForm.Core.Interfaces;
 
 namespace DynamicForm.Core
 {
@@ -9,8 +10,13 @@ namespace DynamicForm.Core
         string _title;
         public QuestionBase(QuestionBase parent)
         {
+            if (parent == null) throw new ArgumentNullException(" Parent can't be null.");
             _childrens = new List<QuestionBase>();
             _parent = parent;
+        }
+        internal QuestionBase()
+        {
+            _childrens = new List<QuestionBase>();
         }
 
         public int Index => _parent != null ? 
@@ -51,13 +57,14 @@ namespace DynamicForm.Core
                 _parent._childrens.RemoveAt(index);
         }
 
-        public bool Contains(QuestionBase question)
+        public bool Contains(QuestionBase child)
         {
-            if (_childrens.Count == 0) return false;
-            if (_childrens.Contains(question)) return true;
-            foreach (var child in _childrens)
+            if (child == null) throw new ArgumentNullException(nameof(child));
+            QuestionBase q = child;
+            while(q.Parent != null)
             {
-                if (child.Contains(question)) return true;
+                if (q.Parent == this) return true;
+                q = q.Parent;
             }
             return false;
         }
@@ -75,10 +82,10 @@ namespace DynamicForm.Core
             return qObject;
         }
 
-        public IReadOnlyList<QuestionBase> Children => _childrens;
+        public IQuestionChildrenList Children => new QuestionChildrensList(_childrens);
 
         public virtual Form Form => Parent?.Form;
 
-        public virtual AnswerBase AnswerModel { get { return new AnswerBase(this); } }
+        public abstract AnswerBase AnswerModel { get; }
     }
 }

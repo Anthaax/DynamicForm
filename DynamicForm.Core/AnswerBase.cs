@@ -1,6 +1,6 @@
 ﻿namespace DynamicForm.Core
 {
-    public class AnswerBase
+    public abstract class AnswerBase
     {
         public AnswerBase(QuestionBase qBase)
         {

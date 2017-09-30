@@ -46,7 +46,9 @@ namespace DynamicForm.Tests
             q2.Parent = null;
             Assert.AreEqual(0, q1.Index);
             q2.Parent = q1;
+            Assert.IsTrue(f.Questions.Children.Contains(q1));
             Assert.IsTrue(f.Questions.Contains(q1));
+            Assert.IsTrue(f.Questions.Children.Contains(q2));
             Assert.IsTrue(f.Questions.Contains(q2));
         }
 
